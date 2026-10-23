@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Briefing Projetos Digitais & Impressos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff8ed;--field:#ffffff;--line:#93accf;--q:#3b220d;--a:#000000;--serif:'Times New Roman',Times,serif;--sans:'Hanken Grotesk',system-ui,sans-serif}
+*{box-sizing:border-box}
+main{min-width:0}input[type=file]{max-width:100%}.opt span{min-width:0;overflow-wrap:anywhere}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--q);font:17px/1.55 var(--sans)}
+.wrap{max-width:1040px;margin:0 auto;padding:32px 20px 80px;display:grid;grid-template-columns:230px 1fr;gap:56px}
+nav{position:sticky;top:32px;align-self:start}
+nav b{font:400 24px/1.1 var(--serif);display:block;margin-bottom:22px}
+nav ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+nav li button{all:unset;display:block;cursor:default;padding:7px 0 7px 16px;margin-left:-2px;border-left:2px solid transparent;font-size:15px;opacity:.55}
+nav li.on button{opacity:1;font-weight:600;border-left-color:var(--q)}
+nav li.ok button{opacity:.85;cursor:pointer}
+nav li.ok button:hover{text-decoration:underline}
+.top{display:none}
+h1,h2{font-family:var(--serif);font-weight:400;margin:0;line-height:1.05}
+h1{font-size:64px;margin-bottom:16px}
+h2{font-size:40px;margin-bottom:8px}
+.lead{font-size:19px;max-width:56ch;margin:0 0 30px}
+h3{font:400 28px/1.15 var(--serif);margin:38px 0 4px}
+.note{margin:0 0 18px;font-style:italic;opacity:.85}
+.sub{border-left:3px solid var(--line);padding-left:20px;margin-left:2px}
+.q{margin:0 0 24px;animation:in .25s ease}
+.q[hidden],.sec[hidden]{display:none}
+@keyframes in{from{opacity:0;transform:translateY(-4px)}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.q{animation:none}html{scroll-behavior:auto}}
+label.l,.l{display:block;font-weight:600;margin-bottom:4px;color:var(--q)}
+.l i{font-style:normal;color:var(--q);margin-left:3px}
+.h{font-size:14.5px;margin:0 0 8px;opacity:.8}
+input[type=text],input[type=email],input[type=tel],input[type=date],select,textarea{width:100%;background:var(--field);color:var(--a);border:1.5px solid var(--line);border-radius:6px;padding:12px 14px;font:inherit}
+textarea{min-height:112px;resize:vertical}
+input::placeholder,textarea::placeholder{color:#6b5b4c}
+:focus-visible{outline:2px solid var(--q);outline-offset:2px}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:12px;align-items:flex-start;background:var(--field);color:var(--a);border:1.5px solid var(--line);border-radius:6px;padding:11px 14px;cursor:pointer}
+.opt:has(input:checked){border-color:var(--q);box-shadow:inset 0 0 0 1px var(--q)}
+.opt:has(input:disabled){opacity:.5;cursor:not-allowed}
+.opt input{accent-color:var(--q);margin-top:5px;width:17px;height:17px;flex:none}
+.opt small{display:block;opacity:.7}
+.cols{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.file{background:var(--field);border:1.5px dashed var(--line);border-radius:6px;padding:16px;color:var(--a)}
+.file ul{list-style:none;margin:10px 0 0;padding:0}
+.file li{display:flex;justify-content:space-between;gap:10px;font-size:15px;padding:4px 0}
+.file li button{all:unset;cursor:pointer;text-decoration:underline;color:var(--q)}
+.err{color:#8a1c12;font-size:14.5px;margin:6px 0 0;font-weight:500}
+.btn{font:600 16px var(--sans);border-radius:6px;padding:13px 26px;border:1.5px solid var(--q);cursor:pointer;background:var(--q);color:var(--bg)}
+.btn.s{background:transparent;color:var(--q);border-color:var(--line)}
+.btn:disabled{opacity:.6;cursor:wait}
+.bar{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:22px;border-top:1.5px solid var(--line)}
+.rv{background:var(--field);border:1.5px solid var(--line);border-radius:6px;padding:6px 20px;margin-bottom:16px;color:var(--a)}
+.rv h4{font:400 24px var(--serif);margin:14px 0 4px;color:var(--q);display:flex;justify-content:space-between;align-items:baseline}
+.rv h4 button{all:unset;cursor:pointer;font:500 14px var(--sans);text-decoration:underline}
+.rv p{margin:0;padding:8px 0;border-top:1px solid #e6edf5;font-size:15.5px;white-space:pre-wrap;overflow-wrap:anywhere}
+.rv p span{display:block;color:var(--q);font-weight:600;font-size:14px}
+.msg{padding:14px 16px;border:1.5px solid var(--line);background:var(--field);border-radius:6px;margin-top:16px;color:var(--a)}
+.panel[hidden]{display:none}
+#pa{display:none}
+@media(max-width:820px){
+h1{font-size:44px}h2{font-size:32px}
+.wrap{grid-template-columns:1fr;gap:0;padding-top:16px}
+nav{display:none}
+.top{display:block;position:sticky;top:0;background:var(--bg);padding:10px 0;margin-bottom:18px;z-index:5;font-size:14.5px;font-weight:600}
+.top div{height:5px;background:#fff;border:1px solid var(--line);border-radius:4px;margin-top:6px}
+.top div i{display:block;height:100%;background:var(--q);border-radius:3px;transition:width .3s}
+}
+@media print{body>*{display:none!important}body>#pa{display:block!important;color:#000;background:#fff}#pa p{margin:4px 0}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+<nav aria-label="Etapas"><b>Briefing Projetos Digitais & Impressos</b><ol id="rail"></ol></nav>
+<main>
+<div class="top" id="top"></div>
+<form id="f" novalidate></form>
+</main>
+</div>
+<div id="pa"></div>
+
+<script>
+/* ====== CONFIGURAÇÃO ======
+   1) Troque pelo SEU e-mail. Na primeira vez que alguém enviar, o FormSubmit manda um e-mail
+      de ativação para este endereço: clique no link e pronto.
+   2) A página precisa estar hospedada (não funciona abrindo o arquivo direto no computador). */
+const EMAIL_DESTINO = "hericamaiade.araujo@gmail.com";
+const LIMITE_ANEXOS_MB = 20;
+const STORE = "briefing_digital_impresso_v1";
+
+/* ====== PERGUNTAS ====== */
+const has=(v,x)=>Array.isArray(v)&&v.includes(x);
+const isP=a=>a.q11==="Peças Impressas"||a.q11==="Híbrido (Digital e Impresso)";
+const isD=a=>a.q11==="Peças Digitais"||a.q11==="Híbrido (Digital e Impresso)";
+const STEPS=[{"t":"Vamos começar pelo básico","i":"Quem está por trás do projeto e qual tipo de serviço você procura?","secs":[{"t":"Seus dados","qs":[{"id":"q01","n":1,"label":"Seu nome completo","type":"text","r":1,"p":"Como prefere ser chamado(a)?"},{"id":"q04","n":4,"label":"E-mail principal","type":"email","r":1,"p":"voce@exemplo.com"},{"id":"q05","n":5,"label":"WhatsApp","type":"tel","r":1,"p":"(00) 00000-0000"},{"id":"q06","n":6,"label":"Cidade e estado","type":"text","r":1,"p":"Ex.: Trindade, GO"},{"id":"q07","n":7,"label":"Instagram da marca ou pessoal","type":"text","p":"@perfil (opcional)"},{"id":"q08","n":8,"label":"Site","type":"url","p":"https:// (opcional)"}]},{"t":"O que você procura?","qs":[{"id":"q11","n":11,"label":"Qual é o meio de publicação/veiculação principal das peças?","type":"single","r":1,"o":[["Peças Digitais","Redes sociais, apresentações, materiais web."],["Peças Impressas","Papelaria, materiais promocionais, embalagens, sinalização."],["Híbrido (Digital e Impresso)","Vamos detalhar cada versão separadamente."]]},{"id":"q12","n":12,"label":"Qual tipo de peça digital você deseja contratar?","type":"multi","r":1,"h":"Marque todas as opções que fazem parte do escopo desejado.","o":["Post para Instagram / Redes Sociais","Carrossel estruturado","Stories / Destaques","Banner digital / Web banner","Apresentação comercial / Institucional","Material para divulgação / Mídia kit","Post para LinkedIn","Capa de vídeos (Thumbnails)","Outro serviço digital"],"s":a=>isD(a),"cols":1},{"id":"q13","n":13,"label":"Descreva o serviço digital necessário","type":"long","r":1,"p":"Conte em detalhes quais peças digitais você precisa.","s":a=>isD(a)&&has(a.q12,"Outro serviço digital")},{"id":"q14","n":14,"label":"Qual tipo de peça impressa você deseja contratar?","type":"multi","r":1,"h":"Marque todas as opções que fazem parte do escopo desejado.","o":["Cartão de visita / Tag","Flyer","Panfleto","Folder","Cartaz","Banner","Faixa","Convite","Cartão comemorativo","Cardápio / Menu","Papelaria corporativa completa","Embalagem","Sacola","Camiseta","Brinde promocional","Outro serviço"],"s":a=>isP(a),"cols":1},{"id":"q15","n":15,"label":"Descreva o serviço impresso necessário","type":"long","r":1,"p":"Conte em detalhes quais peças impressas você precisa.","s":a=>isP(a)&&has(a.q14,"Outro serviço")},{"id":"q16","n":16,"label":"Este material é novo ou já existe uma versão anterior?","type":"single","r":1,"o":["É um material 100% novo (criado do zero)","Já existe uma versão anterior que precisa ser reformulada/redesenhada"]},{"id":"q17","n":17,"label":"O que já existe e o que precisa ser adaptado ou mantido?","type":"long","r":1,"p":"Conte sobre o material atual, o que deve ser aproveitado e o que precisa mudar drasticamente.","s":a=>(a.q16||"").startsWith("Já existe")}]}]},{"t":"A ideia por trás do projeto","i":"Alinhamento de objetivo estratégico, contexto de negócio e perfil do público-alvo.","secs":[{"t":"Objetivo e contexto estratégico","qs":[{"id":"q18","n":18,"label":"O material é destinado a qual entidade?","type":"single","r":1,"o":["Empresa / Marca consolidada","Produto / Linha de produtos","Serviço específico","Evento / Campanha","Projeto pessoal","Profissional autônomo","Outro"]},{"id":"q19","n":19,"label":"Qual é o objetivo principal do projeto?","type":"multi","r":1,"h":"Marque os objetivos centrais (máximo 3).","o":["Divulgar produto/serviço","Informar / Educar o público","Vender / Gerar conversão imediata","Promover evento / Lançamento","Convidar / Engajar","Apresentar empresa / Mídia Kit","Gerar contato / Leads qualificados","Fortalecer a autoridade e posicionamento de marca","Outro objetivo"],"max":3,"cols":1},{"id":"q20","n":20,"label":"Existe alguma situação específica que levou você a procurar este serviço agora?","type":"long","r":1,"p":"Descreva o contexto, lançamento, expansão ou necessidade de mercado."},{"id":"q21","n":21,"label":"Qual ação exata você espera que o público realize após ter contato com o material?","type":"long","r":1,"p":"Ex.: Clicar no link da bio, enviar mensagem no WhatsApp, comprar na loja física, ler todo o conteúdo, etc."},{"id":"q22","n":22,"label":"Como saberemos que este projeto foi um sucesso?","type":"long","r":1,"p":"Descreva os resultados práticos e expectativas visuais/comerciais esperadas."}]},{"t":"Público e posicionamento","qs":[{"id":"q23","n":23,"label":"Quem é o público principal que terá contato com a peça?","type":"long","r":1,"p":"Descreva quem vai ver, ler ou comprar (faixa etária, hábitos, gênero, perfil)."},{"id":"q24","n":24,"label":"Existe um público secundário?","type":"single","r":1,"o":["Não","Sim"]},{"id":"q25","n":25,"label":"Qual é o público secundário?","type":"long","r":1,"p":"Descreva o público secundário e seu papel de influência.","s":a=>a.q24==="Sim"},{"id":"q26","n":26,"label":"Há características essenciais ou necessidades específicas do público?","type":"long","r":1,"p":"Pense em acessibilidade, familiaridade com tecnologia, regionalidade, nível cultural, etc."}]}]},{"t":"Conteúdo e materiais","i":"Estruturação dos textos, insumos visuais e arquivos disponíveis.","secs":[{"t":"Sobre o conteúdo e mensagem principal","qs":[{"id":"q27","n":27,"label":"Qual é o nome, título ou chamada principal da peça?","type":"text","r":1,"p":"Pode ser o título definitivo ou provisório"},{"id":"q28","n":28,"label":"Qual é a mensagem principal que precisa ser comunicada prioritariamente?","type":"long","r":1,"p":"Se o leitor pudesse guardar apenas uma ideia, qual seria?"},{"id":"q29","n":29,"label":"Quais informações informativas/obrigatórias precisam aparecer na arte?","type":"multi","h":"Marque os itens obrigatórios e detalhe no campo seguinte.","o":["Preço / Condições de pagamento","Data / Horário / Local","Endereço físico / Mapa","Contatos / WhatsApp / E-mail / Redes Sociais","Logotipo / Assinatura de parceiros","Código de barras / QR Code","Legal / Disclaimer / Regulamento","Outras informações"],"cols":1},{"id":"q30","n":30,"label":"Detalhamento dos dados obrigatórios","type":"long","p":"Insira aqui os textos exatos já verificados dos dados marcados acima."},{"id":"q31","n":31,"label":"A peça terá uma chamada para ação (Call To Action - CTA)?","type":"single","r":1,"o":["Sim","Não"]},{"id":"q32","n":32,"label":"Qual é o texto exato da chamada para ação (CTA)?","type":"text","r":1,"p":"Ex.: 'Compre agora pelo site', 'Inscreva-se já', 'Chame no WhatsApp'","s":a=>a.q31==="Sim"},{"id":"q33","n":33,"label":"Em que estágio estão os textos do projeto?","type":"single","r":1,"o":["Prontos e totalmente revisados","Parcialmente prontos (em fase final de ajuste)","Ainda não foram produzidos"]},{"id":"q34","n":34,"label":"Quem é o responsável pelo fornecimento e revisão final dos textos?","type":"text","r":1}]},{"t":"Materiais fornecidos e pendências","qs":[{"id":"q35","n":35,"label":"Quais materiais você já possui e pretende disponibilizar?","type":"multi","h":"Selecione todos os insumos disponíveis.","o":["Logotipo em arquivo vetorizado","Manual de identidade visual / Guia de marca","Textos finais revisados","Fotografias em alta resolução","Ilustrações / Ícones próprios","Arquivos editáveis de projetos anteriores","Fontes tipográficas da marca","Gabarito / Especificações técnicas do fornecedor","Outros materiais"],"cols":1},{"id":"q36","n":36,"label":"Anexe os materiais disponíveis","type":"file","h":"","p":"Insira os links do Google Drive, Dropbox ou anexe os arquivos diretamente.","acc":".pdf,.zip,.png,.jpg,.ai,.eps,.psd,.svg"},{"id":"q36_links","n":36,"label":"Links dos materiais disponíveis","type":"long","h":"","p":"Insira os links do Google Drive, Dropbox ou anexe os arquivos diretamente."},{"id":"q37","n":37,"label":"Existe algum material essencial ainda pendente?","type":"single","r":1,"o":["Não, tudo já foi enviado ou está pronto","Sim, há materiais a serem enviados"]},{"id":"q38","n":38,"label":"Quais materiais estão pendentes e qual a data prevista para envio?","type":"long","r":1,"p":"Liste o que falta (ex.: fotos tratadas, texto final) e o prazo estimado.","s":a=>(a.q37||"").startsWith("Sim")}]}]},{"t":"Como o material vai ganhar forma","i":"Especificações técnicas para produção gráfica ou veiculação digital.","secs":[{"t":"Produção impressa","qs":[{"id":"q39","n":39,"label":"Dimensões finais ou formato do impresso","type":"text","r":1,"p":"Ex.: Cartão 9x5cm, Flyer A5 (14,8x21cm), Banner 1x2m, ou 'A definir'"},{"id":"q42","n":42,"label":"Acabamentos especiais previstos","type":"multi","r":1,"o":["Laminação Fosca / Brilho","Verniz Localizado UV","Hot Stamping / Relevo","Corte Especial / Vinco","Encadernação (Brochura, Capa Dura, Espiral, Grampo)","Nenhum acabamento especial","Outro acabamento"],"cols":1},{"id":"q43","n":43,"label":"Já existe uma gráfica ou fornecedor impresso definido?","type":"single","r":1,"o":["Sim","Não / Preciso de indicação"]},{"id":"q44","n":44,"label":"Você possui gabarito ou perfil de cor enviado pela gráfica?","type":"single","r":1,"o":["Sim (vou anexar abaixo)","Não / Não sei","Preciso de orientação técnica"],"s":a=>a.q43==="Sim"},{"id":"q45","n":45,"label":"Anexe as especificações da gráfica","type":"file","h":"","p":"Anexe o arquivo de gabarito ou cole o link do fornecedor gráfico.","s":a=>a.q43==="Sim"&&(a.q44||"").startsWith("Sim"),"acc":".pdf,.zip,.ai,.psd,.png"},{"id":"q45_links","n":45,"label":"Link das especificações da gráfica","type":"long","h":"","p":"Anexe o arquivo de gabarito ou cole o link do fornecedor gráfico.","s":a=>a.q43==="Sim"&&(a.q44||"").startsWith("Sim")}],"show":isP,"sub":1},{"t":"Produção digital","qs":[{"id":"q46","n":46,"label":"Onde a peça será veiculada/publicada?","type":"long","r":1,"p":"Ex.: Feed do Instagram, Stories, Site, E-mail marketing, LinkedIn, WhatsApp."},{"id":"q47","n":47,"label":"Quais formatos de arquivo final você necessita?","type":"multi","r":1,"o":["PNG (transparência)","JPEG (alta qualidade)","PDF Leitura digital ou impressa","Outro formato"],"cols":1},{"id":"q50","n":50,"label":"Será necessário adaptar a peça para múltiplos formatos/canais?","type":"single","r":1,"o":["Não, apenas o formato principal","Sim, precisamos de variações de dimensão e layout"]},{"id":"q51","n":51,"label":"Descreva as variações e canais de adaptação","type":"long","r":1,"p":"Ex.: Formato Feed 1:1, Story 9:16 e Banner Horizontal para site.","s":a=>(a.q50||"").startsWith("Sim")}],"show":isD,"sub":1}]},{"t":"Direção visual e referências","i":"Definição do universo estético, tom de voz e diretrizes de marca.","secs":[{"t":"A linguagem e personalidade","qs":[{"id":"q52","n":52,"label":"Quais atributos de personalidade o projeto DEVE transmitir?","type":"multi","r":1,"h":"Escolha até 5 características essenciais.","o":["Elegante","Sofisticado / Premium","Moderno / Inovador","Criativo / Ousado","Minimalista / Clean","Acolhedor / Humano","Confiável / Profissional","Artesanal / Afetivo","Delicado / Leve","Forte / Impactante","Divertido / Jovem","Tradicional / Clássico","Outro atributo"],"max":5,"cols":1},{"id":"q53","n":53,"label":"Outro atributo desejado","type":"text","p":"Descreva o atributo desejado.","s":a=>has(a.q52,"Outro atributo")},{"id":"q54","n":54,"label":"O que o projeto NÃO DEVE transmitir sob hipótese alguma?","type":"long","r":1,"p":"Pense em sensações, clichês de mercado, cores desagradáveis ou estilos infantis/poluídos a evitar."}]},{"t":"Identidade visual e restrições","qs":[{"id":"q55","n":55,"label":"Há identidade visual formal que precisa ser seguida?","type":"single","r":1,"o":["Sim, temos manual de marca/logotipo que deve ser respeitado rigorosamente","Existe manual e logotipo, mas temos flexibilidade visual"]},{"id":"q56","n":56,"label":"Quais são as regras rígidas ou restrições de marca?","type":"long","p":"Cores institucionais obrigatórias, proibição de alteração do logo, tipografias padrão, etc."},{"id":"q57","n":57,"label":"Há direcionamento para a paleta de cores?","type":"long","r":1,"p":"Especifique cores desejadas, cores proibidas ou se prefere sugestão do estúdio."}],"show":a=>has(a.q35,"Manual de identidade visual / Guia de marca"),"sub":1},{"t":"Referências","qs":[{"id":"q58","n":58,"label":"Você possui referências visuais do estilo que gosta?","type":"single","r":1,"o":["Sim, tenho imagens e links","Não tenho referências no momento"]},{"id":"q59","n":59,"label":"Anexe as referências visuais","type":"file","h":"","p":"Cole links do Pinterest, Behance, Instagram ou anexe imagens de inspiração.","s":a=>(a.q58||"").startsWith("Sim"),"acc":".jpg,.png,.pdf"},{"id":"q59_links","n":59,"label":"Links das referências visuais","type":"long","h":"","p":"Cole links do Pinterest, Behance, Instagram ou anexe imagens de inspiração.","s":a=>(a.q58||"").startsWith("Sim")},{"id":"q60","n":60,"label":"O que exatamente atrai você nessas referências?","type":"long","p":"Ex.: A combinação de cores, o estilo da tipografia, a organização Clean, a fotografia.","s":a=>(a.q58||"").startsWith("Sim")}]}]},{"t":"Entregas, prazos e aprovação","i":"Definição clara de arquivos finais, governança de aprovações e cronograma.","secs":[{"t":"Arquivos finais e entregáveis","qs":[{"id":"q61","n":61,"label":"A contratação exige o fornecimento de arquivos-fonte editáveis?","type":"single","r":1,"h":"A entrega de arquivos editáveis pode impactar os custos e termos de direitos autorais do projeto.","o":["Não, apenas arquivos finais prontos para uso","Sim, necessito dos arquivos editáveis"]},{"id":"q62","n":62,"label":"Quais peças adicionais ou de divulgação são necessárias?","type":"long","p":"Ex.: Mídia kit de apresentação, vinheta simples, capa para redes sociais."}]},{"t":"Cronograma e alinhamento","qs":[{"id":"q63","n":63,"label":"Qual é a data desejada para a entrega final?","type":"date","r":1},{"id":"q64","n":64,"label":"Existe uma data-limite inadiável?","type":"single","r":1,"o":["Sim (evento, lançamento, data de impressão)","Não, o prazo é flexível"]},{"id":"q65","n":65,"label":"Qual é a data fatal e qual é o motivo do compromisso?","type":"long","r":1,"p":"Informe a data exata e o evento/lançamento associado.","s":a=>(a.q64||"").startsWith("Sim")},{"id":"q66","n":66,"label":"Quem será o responsável final pela aprovação das artes?","type":"text","r":1,"p":"Nome e cargo da pessoa que dará o aceite definitivo."},{"id":"q67","n":67,"label":"Existe alguma etapa externa ou dependência que possa afetar o cronograma?","type":"multi","r":1,"o":["Demora no envio ou revisão final dos textos","Envio/aprovação de fotos por terceiros","Múltiplos níveis de aprovação interna","Prazo de produção e frete da gráfica","Nenhuma dependência prevista","Outro"],"cols":1},{"id":"q68","n":68,"label":"Existe alguma informação importante que você gostaria de acrescentar?","type":"long","r":1,"p":"Espaço livre para garantir alinhamento pleno entre cliente e designer."}]}]}];
+const ALLQ=STEPS.flatMap(s=>s.secs.flatMap(c=>c.qs));
+
+/* ====== ESTADO ====== */
+let A={}, FILES={}, cur=0, maxStep=0, done=null, doneMode=false;
+try{const s=JSON.parse(localStorage.getItem(STORE)||"null");if(s){A=s.A||{};cur=s.cur||0;maxStep=s.maxStep||0}}catch(e){}
+const save=()=>{try{localStorage.setItem(STORE,JSON.stringify({A,cur,maxStep}))}catch(e){}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const secOn=c=>!c.show||c.show(A);
+const qOn=(q,c)=>secOn(c)&&(!q.s||q.s(A));
+const empty=(q)=>q.type==="file"?!(FILES[q.id]||[]).length:Array.isArray(A[q.id])?!A[q.id].length:!String(A[q.id]||"").trim();
+const val=q=>q.type==="file"?((FILES[q.id]||[]).length||!doneMode?(FILES[q.id]||[]).map(f=>f.name):(A["_fn_"+q.id]||[])).join(", "):Array.isArray(A[q.id])?A[q.id].join(", "):String(A[q.id]||"").trim();
+
+/* ====== RENDER ====== */
+const F=$("#f");
+function field(q){
+  const id=q.id,ph=q.p?` placeholder="${esc(q.p)}"`:"";
+  if(q.type==="long")return`<textarea id="${id}" name="${id}"${ph}></textarea>`;
+  if(q.type==="select")return`<select id="${id}" name="${id}"><option value="">Selecione</option>${q.o.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`;
+  if(q.type==="single"||q.type==="multi"){
+    const t=q.type==="single"?"radio":"checkbox";
+    return`<div class="opts${q.cols?" cols":""}" role="group" aria-labelledby="l-${id}">${q.o.map(o=>{const[v,d]=Array.isArray(o)?o:[o];return`<label class="opt"><input type="${t}" name="${id}" value="${esc(v)}"><span>${esc(v)}${d?`<small>${esc(d)}</small>`:""}</span></label>`}).join("")}</div>`}
+  if(q.type==="file")return`<div class="file"><input type="file" id="${id}" multiple accept="${q.acc}"><ul id="fl-${id}"></ul><div class="h" style="margin:8px 0 0">Aceitos: ${q.acc.replaceAll(",",", ")}</div></div>`;
+  const t=q.type==="url"?"text":q.type;
+  return`<input type="${t}" id="${id}" name="${id}"${ph}${q.type==="url"?' inputmode="url"':""}${q.type==="tel"?' inputmode="tel" autocomplete="tel"':""}${q.type==="email"?' autocomplete="email"':""}>`;
+}
+F.innerHTML=STEPS.map((s,i)=>`<section class="panel" data-s="${i}" hidden>
+ ${i===0?`<h1>Vamos entender o projeto por <em>inteiro.</em></h1><p class="lead">Este briefing foi criado para organizar tudo o que preciso saber para desenvolver suas peças digitais e/ou impressas — de um post para redes sociais a um material impresso completo.</p>`:`<h2>${esc(s.t)}</h2><p class="lead">${esc(s.i)}</p>`}
+ ${i===0?`<h2>${esc(s.t)}</h2><p class="lead">${esc(s.i)}</p>`:""}
+ ${s.secs.map((c,k)=>`<div class="sec${c.sub?" sub":""}" data-c="${i}-${k}"><h3>${esc(c.t)}</h3>${c.d?`<p class="note">${esc(c.d)}</p>`:""}
+  ${c.qs.map(q=>`<div class="q" data-q="${q.id}"><${q.type==="single"||q.type==="multi"?"div":"label"} class="l" id="l-${q.id}" ${q.type==="single"||q.type==="multi"?"":`for="${q.id}"`}>${esc(q.label)}${q.r?"<i aria-hidden='true'>*</i>":""}</${q.type==="single"||q.type==="multi"?"div":"label"}>${q.h?`<p class="h">${esc(q.h)}</p>`:""}${field(q)}<p class="err" hidden role="alert"></p></div>`).join("")}</div>`).join("")}
+ <div class="bar">${i>0?`<button type="button" class="btn s" data-back>Voltar</button>`:"<span></span>"}<button type="button" class="btn" data-next>${i<STEPS.length-1?"Continuar":"Revisar respostas"}</button></div></section>`).join("")
+ +`<section class="panel" data-s="${STEPS.length}" hidden><h2>Revise e envie</h2><p class="lead">Confira suas respostas. Se algo estiver errado, volte à etapa e corrija antes de enviar.</p><div id="rv"></div><div id="sm"></div><div class="bar"><button type="button" class="btn s" data-back>Voltar</button><button type="button" class="btn" id="send">Enviar briefing</button></div></section>
+ <section class="panel" data-s="done" hidden><h2>Solicitação de envio concluída</h2><p class="lead">O formulário foi encaminhado ao serviço de envio. A entrega por e-mail ainda não foi confirmada. Guarde uma cópia das suas respostas abaixo.</p><p id="srv" class="note"></p><div style="display:flex;gap:12px;flex-wrap:wrap"><button type="button" class="btn s" id="dl">Baixar PDF</button><button type="button" class="btn s" id="pr">Imprimir / salvar em PDF</button><button type="button" class="btn" id="nw">Iniciar novo briefing</button></div></section>`;
+
+/* restaura valores */
+ALLQ.forEach(q=>{const v=A[q.id];if(v==null||q.type==="file")return;
+  F.querySelectorAll(`[name="${q.id}"]`).forEach(el=>{if(el.type==="radio")el.checked=el.value===v;else if(el.type==="checkbox")el.checked=has(v,el.value);else el.value=v})});
+
+const names=[...STEPS.map(s=>s.t),"Revisar e enviar"];
+function refresh(){
+  STEPS.forEach((s,i)=>s.secs.forEach((c,k)=>{
+    const on=secOn(c),el=F.querySelector(`[data-c="${i}-${k}"]`);el.hidden=!on;
+    c.qs.forEach(q=>{const e=F.querySelector(`[data-q="${q.id}"]`);e.hidden=!qOn(q,c)});
+  }));
+  ALLQ.filter(q=>q.max).forEach(q=>{const n=(A[q.id]||[]).length;F.querySelectorAll(`[name="${q.id}"]`).forEach(el=>el.disabled=!el.checked&&n>=q.max)});
+  FILES&&ALLQ.filter(q=>q.type==="file").forEach(q=>{A["_fn_"+q.id]=(FILES[q.id]||[]).map(f=>f.name);$("#fl-"+q.id).innerHTML=(FILES[q.id]||[]).map((f,i)=>`<li><span>${esc(f.name)} (${(f.size/1048576).toFixed(1)} MB)</span><button type="button" data-rm="${q.id}:${i}">remover</button></li>`).join("")});
+}
+function show(n){
+  cur=n;maxStep=Math.max(maxStep,n);
+  F.querySelectorAll(".panel").forEach(p=>p.hidden=p.dataset.s!=String(n));
+  const last=n===STEPS.length;
+  $("#rail").innerHTML=names.map((t,i)=>`<li class="${i===n?"on":i<=maxStep?"ok":""}"><button type="button" ${i<=maxStep&&i!==n?`data-go="${i}"`:""} ${i===n?'aria-current="step"':""}>${i+1}. ${esc(t)}</button></li>`).join("");
+  $("#top").innerHTML=`Etapa ${n+1} de ${names.length}: ${esc(names[n])}<div><i style="width:${(n+1)/names.length*100}%"></i></div>`;
+  if(last)buildReview();
+  refresh();save();window.scrollTo({top:0});
+}
+
+/* ====== VALIDAÇÃO ====== */
+function validate(i){
+  let first=null;
+  STEPS[i].secs.forEach(c=>c.qs.forEach(q=>{
+    const box=F.querySelector(`[data-q="${q.id}"]`),er=box.querySelector(".err");let m="";
+    if(qOn(q,c)){
+      if(q.max&&Array.isArray(A[q.id])&&A[q.id].length>q.max)m="Selecione no máximo "+q.max+" opções.";
+      else if(q.r&&empty(q))m=q.type==="single"||q.type==="multi"||q.type==="select"?"Escolha uma opção.":"Preencha este campo.";
+      else if(q.type==="email"&&!empty(q)&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(A[q.id]))m="Digite um e-mail válido, como voce@exemplo.com.";
+      else if(q.type==="tel"&&!empty(q)&&String(A[q.id]).replace(/\D/g,"").length<10)m="Digite o número com DDD.";
+    }
+    er.textContent=m;er.hidden=!m;if(m&&!first)first=box;
+  }));
+  if(first){first.scrollIntoView({block:"center"});const f=first.querySelector("input,select,textarea");f&&f.focus({preventScroll:true})}
+  return !first;
+}
+
+/* ====== RESUMO ====== */
+function collect(){return STEPS.map((s,i)=>({t:s.t,items:s.secs.filter(secOn).flatMap(c=>c.qs.filter(q=>qOn(q,c)).map(q=>({q,v:val(q)})))}))}
+function buildReview(){
+  $("#rv").innerHTML=collect().map((g,i)=>`<div class="rv"><h4>${esc(g.t)}<button type="button" data-go="${i}">editar</button></h4>${g.items.map(x=>`<p><span>${esc(x.q.label)}</span>${esc(x.v||"—")}</p>`).join("")}</div>`).join("");
+}
+function asText(){return collect().map(g=>`== ${g.t.toUpperCase()} ==\n`+g.items.map(x=>`${x.q.n}. ${x.q.label}\n   ${x.v||"(não respondido)"}`).join("\n")).join("\n\n")}
+
+
+/* ====== PDF ====== */
+function makePDF(){
+  const d=new window.jspdf.jsPDF({unit:"mm",format:"a4"}),M=18,W=210,mw=W-2*M;let y=M;
+  const line=(txt,size,bold,color,lh)=>{d.setFont("times",bold?"bold":"normal");d.setFontSize(size);d.setTextColor(...color);
+    d.splitTextToSize(String(txt),mw).forEach(l=>{if(y+lh>285){d.addPage();y=M}d.text(l,M,y);y+=lh})};
+  line("Briefing Projetos Digitais & Impressos",22,1,[59,34,13],9);
+  line("Enviado em "+new Date().toLocaleString("pt-BR"),10,0,[0,0,0],6);y+=4;
+  collect().forEach(g=>{
+    if(y>260){d.addPage();y=M}
+    line(g.t,15,1,[59,34,13],7);d.setDrawColor(147,172,207);d.line(M,y-3,W-M,y-3);y+=2;
+    g.items.forEach(x=>{if(y>270){d.addPage();y=M}
+      line(x.q.label,10,1,[59,34,13],5);line(x.v||"-",11,0,[0,0,0],5.2);y+=3});
+    y+=3});
+  return d;
+}
+
+/* ====== EVENTOS ====== */
+F.addEventListener("input",e=>{
+  const el=e.target,id=el.name||el.id;if(!id||el.type==="file"||el.type==="checkbox"||el.type==="radio")return;
+  if(el.type==="tel"){let d=el.value.replace(/\D/g,"").slice(0,11);el.value=d.length>6?`(${d.slice(0,2)}) ${d.slice(2,d.length>10?7:6)}-${d.slice(d.length>10?7:6)}`:d.length>2?`(${d.slice(0,2)}) ${d.slice(2)}`:d}
+  A[id]=el.value;refresh();save();
+});
+F.addEventListener("focusout",e=>{const el=e.target;if(el.id==="q08"&&el.value.trim()&&!/^https?:\/\//i.test(el.value.trim())){el.value="https://"+el.value.trim();A.q08=el.value;save()}});
+F.addEventListener("change",e=>{
+  const el=e.target;
+  if(el.type==="radio"){A[el.name]=el.value}
+  else if(el.type==="checkbox"){
+    const exclusive={q42:"Nenhum acabamento especial",q67:"Nenhuma dependência prevista"};if(exclusive[el.name]&&el.checked){F.querySelectorAll(`[name="${el.name}"]`).forEach(x=>{if(x!==el&&(el.value===exclusive[el.name]||x.value===exclusive[el.name]))x.checked=false})}
+    A[el.name]=[...F.querySelectorAll(`[name="${el.name}"]:checked`)].map(x=>x.value)}
+  else if(el.type==="file"){
+    const q=ALLQ.find(x=>x.id===el.id),ok=q.acc.split(",");let bad=[];
+    FILES[q.id]=FILES[q.id]||[];
+    [...el.files].forEach(f=>{const x="."+f.name.split(".").pop().toLowerCase();if(!ok.includes(x))bad.push(f.name);else if(!FILES[q.id].some(g=>g.name===f.name&&g.size===f.size))FILES[q.id].push(f)});
+    el.value="";if(bad.length)alert("Formato não aceito: "+bad.join(", ")+"\nAceitos: "+q.acc.replaceAll(",",", "));
+  }else return;
+  refresh();save();
+});
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.rm){const[id,i]=b.dataset.rm.split(":");FILES[id].splice(+i,1);refresh()}
+  else if(b.dataset.go!=null)show(+b.dataset.go);
+  else if("next"in b.dataset){if(validate(cur))show(cur+1)}
+  else if("back"in b.dataset)show(cur-1);
+});
+$("#send").onclick=send;
+$("#dl").onclick=()=>{try{makePDF().save("briefing-digital-impresso.pdf")}catch(e){alert("Não foi possível gerar o PDF agora. Use Imprimir / salvar em PDF.")}};
+$("#pr").onclick=()=>{$("#pa").innerHTML="<h1>Briefing Projetos Digitais & Impressos</h1>"+esc(done).split("\n").map(l=>`<p>${l||"&nbsp;"}</p>`).join("");window.print()};
+$("#nw").onclick=()=>{A={};FILES={};done=null;maxStep=0;ALLQ.forEach(q=>F.querySelectorAll(`[name="${q.id}"]`).forEach(el=>{el.type==="radio"||el.type==="checkbox"?el.checked=false:el.value=""}));show(0)};
+
+/* ====== ENVIO PARA O E-MAIL ====== */
+async function send(){
+  for(let i=0;i<STEPS.length;i++){if(!validate(i)){show(i);validate(i);return}}
+  const box=$("#sm"),btn=$("#send");box.innerHTML="";
+  const fileList=collect().flatMap(g=>g.items).filter(x=>x.q.type==="file").flatMap(x=>(FILES[x.q.id]||[]).map(f=>({q:x.q,f})));
+  const total=fileList.reduce((s,x)=>s+x.f.size,0);
+  if(total>LIMITE_ANEXOS_MB*1048576){box.innerHTML=`<div class="msg">Os anexos somam ${(total/1048576).toFixed(1)} MB e o limite é ${LIMITE_ANEXOS_MB} MB. Remova ou compacte alguns arquivos (.zip) e tente de novo. Suas respostas continuam salvas.</div>`;return}
+  if(EMAIL_DESTINO.startsWith("SEU-EMAIL")){box.innerHTML=`<div class="msg">Envio ainda não configurado: edite EMAIL_DESTINO no código da página.</div>`;return}
+  const fd=new FormData(),pad=n=>String(n).padStart(2,"0");
+  btn.disabled=true;btn.textContent="Enviando…";
+  const slug=(A.q01||"cliente").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-zA-Z0-9]+/g,"-").replace(/^-|-$/g,"").toLowerCase()||"cliente";
+  fd.append("_subject","Novo briefing digital e impresso: "+(A.q01||"cliente"));
+  fd.append("_template","table");fd.append("_captcha","false");
+  if(A.q04)fd.append("_replyto",A.q04);
+  fd.append("_honey","");
+  fd.append("Cliente",A.q01||"");fd.append("E-mail",A.q04||"");fd.append("WhatsApp",A.q05||"");
+  fd.append("Resumo","Respostas completas no PDF anexo.");
+  const nomes=[];
+  try{fd.append("briefing_pdf",new File([makePDF().output("blob")],"briefing-"+slug+".pdf",{type:"application/pdf"}))}
+  catch(e){fd.append("Aviso","Não foi possível gerar o PDF; respostas abaixo.");collect().forEach(g=>g.items.forEach(x=>{if(x.q.type!=="file")fd.append(`${pad(x.q.n)}. ${x.q.label}`,x.v||"(não respondido)")}))}
+  const usados={};
+  const fname=x=>{let n=`Pergunta-${pad(x.q.n)}_${x.f.name.replace(/[\\/:*?"<>|]/g,"_")}`;usados[n]=(usados[n]||0)+1;if(usados[n]>1)n=`Pergunta-${pad(x.q.n)}_${usados[n]}_${x.f.name.replace(/[\\/:*?"<>|]/g,"_")}`;nomes.push(n);return n};
+  if(fileList.length){
+    if(window.JSZip){
+      const z=new JSZip();fileList.forEach(x=>z.file(fname(x),x.f));
+      const blob=await z.generateAsync({type:"blob",compression:"STORE"});
+      fd.append("imagens_zip",new File([blob],"imagens-"+slug+".zip",{type:"application/zip"}));
+    }else fileList.forEach((x,i)=>{const n=fname(x);fd.append("anexo_"+(i+1),new File([x.f],n,{type:x.f.type}))});
+  }
+  fd.append("Arquivos enviados",nomes.join("; ")||"(nenhum)");
+  fd.append("Enviado em",new Date().toLocaleString("pt-BR"));
+  const fr=document.createElement("iframe");fr.name="envio_frame";fr.style.display="none";document.body.appendChild(fr);
+  const form=document.createElement("form");form.method="POST";form.enctype="multipart/form-data";form.style.display="none";form.target="envio_frame";
+  form.action="https://formsubmit.co/"+encodeURIComponent(EMAIL_DESTINO);
+  for(const [k,v] of fd.entries()){
+    const i=document.createElement("input");i.name=k;
+    if(v instanceof File){i.type="file";const dt=new DataTransfer();dt.items.add(v);i.files=dt.files}
+    else{i.type="hidden";i.value=v}
+    form.appendChild(i);
+  }
+  document.body.appendChild(form);
+  const fim=ok=>{clearTimeout(tm);fr.onload=null;form.remove();fr.remove();
+    if(ok){done=asText();try{localStorage.removeItem(STORE)}catch(e){}
+      F.querySelectorAll(".panel").forEach(p=>p.hidden=p.dataset.s!=="done");
+      $("#rail").innerHTML="";$("#top").innerHTML="";window.scrollTo({top:0})}
+    else box.innerHTML=`<div class="msg">Não foi possível confirmar o envio. Suas respostas continuam salvas nesta página: confira a conexão e tente novamente.</div>`;
+    btn.disabled=false;btn.textContent="Enviar briefing"};
+  const tm=setTimeout(()=>fim(false),120000);
+  form.submit();
+  fr.onload=()=>fim(true);
+  return;
+  btn.disabled=false;btn.textContent="Enviar briefing";
+}
+
+if(/[?&]enviado=1/.test(location.search)){
+  doneMode=true;done=asText();try{localStorage.removeItem(STORE)}catch(e){}
+  history.replaceState(null,"",location.pathname);
+  F.querySelectorAll(".panel").forEach(p=>p.hidden=p.dataset.s!=="done");
+}else show(Math.min(cur,STEPS.length));
+</script>
+</body>
+</html>
